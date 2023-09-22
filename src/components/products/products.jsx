@@ -60,7 +60,7 @@ const Products = () => {
           className="my-custom-carousel"
         >
           {products.map((product) => (
-            <div key={product.id} className="carousel-slide mt-8">
+            <div key={product.id} className="carousel-slide">
               <img
                 src={product.image}
                 alt={product.title}
