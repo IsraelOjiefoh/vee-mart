@@ -15,3 +15,50 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+/* Example CSS styles to customize carousel appearance */
+.my-custom-carousel {
+  max-width: 600px;
+  /* Adjust the maximum width to your liking */
+  margin: 0 auto;
+  /* Center the carousel */
+  
+}
+
+.carousel-slide {
+  background-color: #fff;
+  /* Set a background color for each slide */
+  border-radius: 8px;
+  /* Add rounded corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  /* Add a subtle shadow */
+  text-align: center;
+  /* Center align slide content */
+  padding: 20px;
+  /* Add spacing around the content */
+  cursor: pointer;
+}
+
+.carousel-image {
+  max-width: 50%;
+  /* Ensure images fit within the slide */
+  height: auto;
+  /* Maintain image aspect ratio */
+  margin-bottom: 10px;
+  /* Add spacing between image and text */
+}
+
+.carousel-title {
+  font-size: 1.2rem;
+  /* Adjust the title font size */
+  font-weight: bold;
+  margin-bottom: 6px;
+  /* Add spacing below the title */
+}
+
+.carousel-description {
+  font-size: 1rem;
+  /* Adjust the description font size */
+  color: #666;
+  /* Set the text color */
+}
