@@ -24,7 +24,6 @@ const Products = () => {
 
   return (
     <div className="container mx-auto py-4">
-      <h1 className="text-3xl font-semibold mb-4">Product List</h1>
       {isLoading ? (
         <div className="flex items-center justify-center h-40">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>

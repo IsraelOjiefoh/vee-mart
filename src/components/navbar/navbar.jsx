@@ -1,65 +1,124 @@
-import React from "react";
-
-export default function Navbar() {
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
+import { Collapse, Dropdown, initTE } from "tw-elements";
+import { Datepicker, Input } from "tw-elements";
+/* eslint-disable react/no-unknown-property */
+const Navbar = () => {
+  // Initialization for ES Users
+  initTE({ Datepicker, Input }, { allowReinits: true });
+  initTE({ Collapse, Dropdown });
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between py-3 bg-purple-500 mb-3">
-        <div className="container  mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <a
-              className="text-sm pl-5 font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-              href="#pablo"
-            >
-              Vee-Mart
-            </a>
-            <button
-              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-              onClick={() => setNavbarOpen(!navbarOpen)}
-            >
-              <i className="fas fa-bars"></i>
-            </button>
-          </div>
-          <div
-            className={
-              "lg:flex flex-grow items-center" +
-              (navbarOpen ? " flex" : " hidden")
-            }
-            id="example-navbar-danger"
+      <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+        <div className="flex w-full flex-wrap items-center justify-between px-3">
+          {/* <!-- Hamburger button for mobile view --> */}
+          <button
+            className="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+            type="button"
+            data-te-collapse-init
+            data-te-target="#navbarSupportedContent1"
+            aria-controls="navbarSupportedContent1"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="nav-item">
+            {/* <!-- Hamburger icon --> */}
+            <span className="[&>svg]:w-7">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="h-7 w-7"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+
+          {/* <!-- Collapsible navigation container --> */}
+          <div
+            className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
+            id="navbarSupportedContent1"
+            data-te-collapse-item
+          >
+            {/* <!-- Logo --> */}
+            <a
+              className="mb-4 ml-2 mr-5 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+              href="#"
+            >
+              <img
+                src="/src/assets/logo.png"
+                style={{ height: "15px" }}
+                alt="TE Logo"
+                loading="lazy"
+              />
+            </a>
+            {/* <!-- Left navigation links --> */}
+            <ul
+              className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row"
+              data-te-navbar-nav-ref
+            >
+              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
+                {/* <!-- Dashboard link --> */}
                 <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
+                  href="#"
+                  data-te-nav-link-ref
                 >
-                  <i className="fa fa-home text-lg leading-lg text-white opacity-75"></i>
-                  <span className="ml-2">Home</span>
+                  Home
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <!-- Team link --> */}
+              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                 <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                  href="#"
+                  data-te-nav-link-ref
                 >
-                  <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
-                  <span className="ml-2">Shop</span>
+                  Shop
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <!-- Projects link --> */}
+              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                 <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                  href="#"
+                  data-te-nav-link-ref
                 >
-                  <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                  <span className="ml-2">Blogs</span>
+                  Contact Us
                 </a>
               </li>
             </ul>
+          </div>
+
+          {/* <!-- Right elements --> */}
+          <div className="relative flex items-center">
+            {/* <!-- Cart Icon --> */}
+            <a
+              className="mr-4 text-neutral-600 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+              href="#"
+            >
+              <span className="[&>svg]:w-5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
+                </svg>
+              </span>
+            </a>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded">
+              Account/Login
+            </button>
           </div>
         </div>
       </nav>
     </>
   );
-}
+};
+
+export default Navbar;
