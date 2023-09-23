@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 
 const SearchBar = () => {
   const [selectedOption, setSelectedOption] = useState("All Products");
@@ -8,12 +8,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex items-center bg-gray-200 p-2 rounded">
-      <input
-        type="text"
-        placeholder="Search..."
-        className="flex-grow px-2 py-1 rounded bg-white outline-none"
-      />
+    <div className="flex items-center justify-center my-10 bg-gray-200 p-2 rounded">
       <select
         value={selectedOption}
         onChange={handleChange}
