@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  //fetching product data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,12 +35,39 @@ const Products = () => {
       )
     : products;
 
+  //Rating Logic
+  const renderStars = (rating) => {
+    const maxRating = 5; // Assuming ratings are out of 5
+    let filledStars = Math.round(rating); // Round to the nearest whole star
+
+    // Add this check to ensure filledStars does not exceed maxRating
+    if (filledStars > maxRating) {
+      filledStars = maxRating;
+    }
+
+    const emptyStars = maxRating - filledStars;
+    const starIcons = [];
+
+    // Render filled stars
+    for (let i = 0; i < filledStars; i++) {
+      starIcons.push(<span key={`star-filled-${i}`}>★</span>); // Unicode star character
+    }
+
+    // Render empty stars
+    for (let i = 0; i < emptyStars; i++) {
+      starIcons.push(<span key={`star-empty-${i}`}>☆</span>); // Unicode empty star character
+    }
+
+    return starIcons;
+  };
+
   return (
+    //  categories
     <div className="container mx-auto py-4">
       <h1 className="text-2xl text-center pt-10  font-bold">Categories</h1>
-      <div className=" flex items-center justify-center bg-gray-200 p-2 rounded my-5">
+      <div className=" flex items-center justify-center bg-gray-200 p-2 rounded my-5 ">
         {/* Category Navigation Buttons */}
-        <div className="flex space-x-4 my-5">
+        <div className="sm:block flex space-x-4 my-5 ">
           <button
             onClick={() => handleCategoryChange("")}
             className={`${
@@ -55,7 +82,7 @@ const Products = () => {
               selectedCategory === "electronics"
                 ? "bg-blue-600 text-white"
                 : "bg-gray-300"
-            } px-2 py-1 rounded`}
+            } px-1 py-1 rounded`}
           >
             Electronics
           </button>
@@ -65,7 +92,7 @@ const Products = () => {
               selectedCategory === "men's clothing"
                 ? "bg-blue-600 text-white"
                 : "bg-gray-300"
-            } px-2 py-1 rounded`}
+            } px-1 py-1 rounded`}
           >
             Men
           </button>
@@ -75,7 +102,7 @@ const Products = () => {
               selectedCategory === "women's clothing"
                 ? "bg-blue-600 text-white"
                 : "bg-gray-300"
-            } px-2 py-1 rounded`}
+            } px-1 py-1 rounded`}
           >
             Women
           </button>
@@ -85,7 +112,7 @@ const Products = () => {
               selectedCategory === "jewelery"
                 ? "bg-blue-600 text-white"
                 : "bg-gray-300"
-            } px-2 py-1 rounded`}
+            }  px-1 py-1 rounded`}
           >
             Jewelery
           </button>
@@ -122,8 +149,14 @@ const Products = () => {
                 alt={product.title}
                 className="w-full h-40 object-cover rounded-lg "
               />
+
               <h2 className="text-lg font-semibold mt-2">{product.title}</h2>
-              <p className="text-gray-600">${product.price}</p>
+
+              <span className="m-2">
+                Rating: {renderStars(product.rating.rate)}
+              </span>
+
+              <p className="text-gray-600 m-2">Price: ${product.price}</p>
             </div>
           ))}
         </div>

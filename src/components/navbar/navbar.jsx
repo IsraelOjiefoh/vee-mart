@@ -10,7 +10,7 @@ function Navbar() {
 
   return (
     <nav className="bg-blue-500 p-4">
-      <div className="container mx-auto flex justify-around items-center">
+      <div className="container mx-auto flex justify-between items-center">
         <div className=" flex justify-normal">
           <h1 className="text-white text-2xl mr-1">VEE-MART</h1>
           <img src={logo} alt="logo" className="w-5" />
