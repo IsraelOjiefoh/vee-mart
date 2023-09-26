@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Rating from "../Rating/rating";
+import axios from "axios";
 
 const ProductsListing = () => {
   const [productsList, setProductsList] = useState([]);
-  const [isLoading, setIsLoading]=useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     axios
@@ -14,17 +15,49 @@ const ProductsListing = () => {
         console.log(fetchedData);
         setProductsList(fetchedData);
         setIsLoading(false);
-
-        // Log ratingsArray for debugging
-      
       })
-      .catch((err) => console.log("Failed to fetch", err));
+      .catch((err) => {
+        console.log("Failed to fetch", err);
+        setError(err);
+        setIsLoading(false);
+      });
   }, []);
 
+  const reloadHandler = () => {
+    setIsLoading(true);
+    setError(null);
+    setProductsList([]); // Clear existing data
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => {
+        const fetchedData = response.data;
+        console.log(fetchedData);
+        setProductsList(fetchedData);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("Failed to fetch", err);
+        setError(err);
+        setIsLoading(false);
+      });
+  };
+
   return (
-    <>
+    <div className="min-h-screen flex items-center justify-center">
       {isLoading ? (
-        <p>Unable to fetch</p>
+        <div className="text-4xl font-bold text-gray-700 animate-pulse">
+          Loading Products...
+        </div>
+      ) : error ? (
+        <div className="text-4xl font-bold text-red-500">
+          Error fetching data.
+          <button
+            onClick={reloadHandler}
+            className="ml-2 text-blue-500 underline cursor-pointer"
+          >
+            Try Again
+          </button>
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-32">
           {productsList.map((product) => (
@@ -45,7 +78,6 @@ const ProductsListing = () => {
                   Price: ${product.price.toFixed(2)}
                 </p>
                 <Rating rating={product.rating.rate} />
-                {/* Add more product details or descriptions here */}
               </div>
               <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-70 transition-opacity duration-300 ease-in-out flex items-center justify-center">
                 <button className="text-white text-lg font-semibold py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded-lg transition-all duration-300 ease-in-out">
@@ -56,7 +88,8 @@ const ProductsListing = () => {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
+
 export default ProductsListing;
