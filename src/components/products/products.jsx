@@ -89,8 +89,8 @@ const ProductsListing = () => {
         </div>
       ) : (
         <div>
+                <label htmlFor="button"  className="text-2xl flex justify-center items-center mt-10">Filter By: </label>
               <div className="mb-4 space-x-2 flex justify-center my-10">
-                <label htmlFor="button"  className="text-2xl">Filter By: </label>
             <button
               onClick={() => setSortBy("default")}
               className={`${
