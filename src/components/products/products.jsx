@@ -153,14 +153,18 @@ const ProductsListing = () => {
                   <h2 className="text-lg font-semibold text-gray-800 mb-2">
                     {product.title}
                   </h2>
-                  <p className="text-gray-600">
-                    Price: ${product.price}
-                  </p>
-                  <Rating rating={product.rating.rate} />
-
-                  {/* Display the count for each product */}
-                  <div>
-                    <h2>Count: {product.rating.count}</h2>
+                  <div className="bg-white p-4 shadow-md rounded-lg">
+                    <p className="text-gray-600 text-lg font-semibold">
+                      Price: ${product.price}
+                    </p>
+                    <div className="mt-2">
+                      <Rating rating={product.rating.rate} />
+                    </div>
+                    <div className="mt-2">
+                      <h2 className="text-xl">
+                       {product.rating.count} Pieces Available
+                      </h2>
+                    </div>
                   </div>
 
                   <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-70 transition-opacity duration-300 ease-in-out flex items-center justify-center">
