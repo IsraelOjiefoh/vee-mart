@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Rating from "../Rating/rating";
+
 const ProductsListing = () => {
   const [productsList, setProductsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState("default");
+  const [totalProducts, setTotalProducts] = useState(0); // Initialize totalProducts to 0
 
   useEffect(() => {
     axios
       .get("https://fakestoreapi.com/products")
       .then((response) => {
         const fetchedData = response.data;
-        console.log(fetchedData);
         setProductsList(fetchedData);
         setIsLoading(false);
+        setTotalProducts(fetchedData.length); // Set the total number of products
       })
       .catch((err) => {
         console.log("Failed to fetch", err);
@@ -31,9 +33,9 @@ const ProductsListing = () => {
       .get("https://fakestoreapi.com/products")
       .then((response) => {
         const fetchedData = response.data;
-        console.log(fetchedData);
         setProductsList(fetchedData);
         setIsLoading(false);
+        setTotalProducts(fetchedData.length); // Update totalProducts on reload
       })
       .catch((err) => {
         console.log("Failed to fetch", err);
@@ -43,16 +45,14 @@ const ProductsListing = () => {
   };
 
   const sortProducts = () => {
-    if (sortBy === "default") {
-      // No sorting selected, return products as-is
-      return productsList;
-    }
-
     // Clone the products list to avoid modifying the original array
     const sortedProducts = [...productsList];
 
     // Sort the products based on the selected sorting option
-    if (sortBy === "priceLowToHigh") {
+    if (sortBy === "default") {
+      // No sorting selected, return products as-is
+      return sortedProducts;
+    } else if (sortBy === "priceLowToHigh") {
       sortedProducts.sort(
         (productA, productB) => productA.price - productB.price
       );
@@ -66,7 +66,7 @@ const ProductsListing = () => {
       );
     }
 
-    return sortedProducts;
+    return sortedProducts; // Return the sorted array
   };
 
   const sortedProducts = sortProducts();
@@ -89,15 +89,20 @@ const ProductsListing = () => {
         </div>
       ) : (
         <div>
-                <label htmlFor="button"  className="text-2xl flex justify-center items-center mt-10">Filter By: </label>
-              <div className="mb-4 space-x-2 flex justify-center my-10">
+          <label
+            htmlFor="button"
+            className="text-2xl flex justify-center items-center mt-10"
+          >
+            Filter By:{" "}
+          </label>
+          <div className="flex flex-wrap justify-center md:mb-20 space-x-2 space-y-2 md:space-y-0 my-4 md:my-10">
             <button
               onClick={() => setSortBy("default")}
               className={`${
                 sortBy === "default"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-300 text-gray-700"
-              } py-2 px-4 rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600`}
+              } py-2 px-4 rounded-lg md:py-2 md:px-4 transition-all duration-300 ease-in-out hover:bg-blue-600`}
             >
               Default
             </button>
@@ -107,7 +112,7 @@ const ProductsListing = () => {
                 sortBy === "priceLowToHigh"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-300 text-gray-700"
-              } py-2 px-4 rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600`}
+              } py-2 px-4 rounded-lg md:py-2 md:px-4 transition-all duration-300 ease-in-out hover:bg-blue-600`}
             >
               Price Low to High
             </button>
@@ -117,9 +122,9 @@ const ProductsListing = () => {
                 sortBy === "priceHighToLow"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-300 text-gray-700"
-              } py-2 px-4 rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600`}
+              } py-2 px-4 rounded-lg md:py-2 md:px-4 transition-all duration-300 ease-in-out hover:bg-blue-600`}
             >
-              Price High to Low
+              Price High To Low
             </button>
             <button
               onClick={() => setSortBy("rating")}
@@ -127,7 +132,7 @@ const ProductsListing = () => {
                 sortBy === "rating"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-300 text-gray-700"
-              } py-2 px-4 rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600`}
+              } py-2 px-4 rounded-lg md:py-2 md:px-4 transition-all duration-300 ease-in-out hover:bg-blue-600`}
             >
               Rating
             </button>
@@ -149,17 +154,21 @@ const ProductsListing = () => {
                     {product.title}
                   </h2>
                   <p className="text-gray-600">
-                    Price: ${product.price.toFixed(2)}
+                    Price: ${product.price}
                   </p>
-                  {/* Include your Rating component here */}
                   <Rating rating={product.rating.rate} />
-                  {/* Add more product details or descriptions here */}
+
+                  {/* Display the count for each product */}
+                  <div>
+                    <h2>Count: {product.rating.count}</h2>
+                  </div>
+
+                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-70 transition-opacity duration-300 ease-in-out flex items-center justify-center">
+                    <button className="text-white text-lg font-semibold py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded-lg transition-all duration-300 ease-in-out">
+                      Product Details
+                    </button>
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-70 transition-opacity duration-300 ease-in-out flex items-center justify-center">
-                  <button className="text-white text-lg font-semibold py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded-lg transition-all duration-300 ease-in-out">
-                    Add to Cart
-                  </button>
-                </div>{" "}
               </div>
             ))}
           </div>
